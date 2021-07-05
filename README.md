@@ -1,0 +1,5 @@
+- 👋 Hi, I’m @marcosnova2002
+- 👀 I’m interested in Learn to programing
+- 🌱 I’m currently learning about SO
+- 💞️ I’m looking to collaborate on any proect
+- 📫 marquisduart@gmail.com
