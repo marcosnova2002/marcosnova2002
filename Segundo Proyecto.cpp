@@ -93,6 +93,7 @@ public:
 	void laDeMayorPrecio();
 	void imprimePrecMayoresDe();
 	void eliminarArtPorSuId();
+	void productoDeMayorValor();
 	
 	
 };
@@ -137,7 +138,7 @@ bool SuperContenedorV::ingresaNuevoArticulo() {
 		return true;
 	}
 	else {
-		cout << "No hay espacio en el vector para m�s productos.." << endl;
+		cout << "No hay espacio en el vector para más productos.." << endl;
 		return false;
 	}
 }
@@ -162,7 +163,20 @@ bool SuperContenedorV::ingresaNuevoArticulo(Articulo pE) {
 	}
 }
 
-
+void SuperContenedorV::eliminarArtPorSuId(){
+	string cod;
+	cout<<"ingrese el id del producto"<<endl;
+	cin >> cod;
+	
+	for (int i = 0; i < cantidad; i++){
+		if (vec[i].getId() == cod) {
+			for (int j = i; j<cantidad; j++){
+				vec[j]=vec[j+1];
+				}
+			cantidad --;
+		}
+	}
+}
 void SuperContenedorV::ordenarAscPorPrecio() {
 	Articulo aux;
 	for (int i = 0; i < cantidad; i++) { 
@@ -203,23 +217,21 @@ void SuperContenedorV::laDeMayorPrecio() {
 	}
 }
 	
-//void SuperContenedorV::proDeMayExist();{
-//	
-//	int n_articulos, valM=0;
-//	float mayor=0;
-//	cout<<"Digite el n�mero de art�culos:"<<
-//		cin>>n_articulos>>endl;
-//	for(int i=0; i<n_articulos; i++){
-//		cout<<i+1<<"Digite su art�culo:";
-//		cin>>(art[i].art�culo,20,�\n�)>>endl;
-//		cout<<i+1<<�Digite su valor: �;
-//		cin>>art[i].valor;
-//		if (art[i].valor > mayor){
-//			mayor = art[i].valor;
-//			posM = i;
-//		}
-//	
-//}
+void SuperContenedorV::productoDeMayorValor(){
+	
+	int pos;
+	float mayor=0;
+	
+	for(int i=0; i< cantidad; i++){
+		if (vec[i].getPrecio() > mayor){
+			mayor = vec[i].getPrecio();
+		pos = i;
+		}
+	}
+	cout<<vec[pos].getId()<<endl;
+	cout<<vec[pos].getNombre()<<endl;
+	cout<<vec[pos].getPrecio()<<endl;
+}
 
 //void SuperContenedorV::eliminarArtPorSuId()		{    
 //	string cod;
@@ -281,14 +293,14 @@ int menu() {
 	cout << "-8- Desplegar los productos bajos de existencias " << endl;
 	cout << "-9- Desplegar el total de kilogramos de todos los productos vendidos" << endl;
 	cout << "-10- Desplegar el total de Kilogramos vendidos de un producto." << endl;
-	cout << "-11- Desplegar la lista de productos que son m�s costosos que un producto dado." << endl;
+	cout << "-11- Desplegar la lista de productos que son más costosos que un producto dado." << endl;
 	cout << "-12- Desplegar la cantidad de unidades vendidas de un producto en particular." << endl;
 	cout << "-13- Desplegar el Costo del Inventario." << endl;
 	cout << "-14- Desplegar el Costo de las Ventas." << endl;
 	cout << "-15- Desplegar el Valor de las Ventas." << endl;
 	cout << "-16- Desplegar la ganancia total del supermercado por concepto de ventas." << endl;
-	cout << "-17- Desplegar el gr�fico de las ventas de los 5 productos m�s vendidos." << endl;
-	cout << "-18- Desplegar el gr�fico de las ventas de los 5 productos menos vendidos." << endl;
+	cout << "-17- Desplegar el gráfico de las ventas de los 5 productos más vendidos." << endl;
+	cout << "-18- Desplegar el gráfico de las ventas de los 5 productos menos vendidos." << endl;
 	cout << "-19- Desplegar el promedio de precios de venta de los productos vendidos con ganancia." << endl;
 	cout << "-20- Salir." << endl;
 	cout << "------------------------------------" << endl;
@@ -302,35 +314,31 @@ void ingresaArticulo(SuperContenedorV& C) {
 	C.ingresaNuevoArticulo();
 }
 
-//void eliminarId(SuperContenedorV& C){
-//	cout << "2- Eliminar un producto por su Id.";
-//	C.eliminarArtPorSuId();
-//	cout << "Producto eliminado" << endl;
-//}
+void eliminarId(SuperContenedorV& C){
+	cout << "2- Eliminar un producto por su Id.";
+	C.eliminarArtPorSuId();
+	cout << "Producto eliminado" << endl;
+}
 
-void ordenaAscendente(SuperContenedorV& C) {
+void proDeMayVal(SuperContenedorV& C) {
 	cout << " 3- Ordenar asc por precio." << endl;
-	C.ordenarAscPorPrecio();
-	C.laDeMayorPrecio();
-	cout << "LISTO - ORDENADO" << endl;
+	C.productoDeMayorValor();
 }
 
-void proDeMayVal(SuperContenedorV& C){
-	cout << "-4- Desplegar el producto de mayor existencias" <<endl;
-		
-}
-void
-	
+//void proDeMayVal(SuperContenedorV& C){
+//	cout << "-4- Desplegar el producto de mayor existencias" <<endl;
+//		
+//}
 	
 void imprimirContenedor(SuperContenedorV& C) {
 	cout << " 6- Imprimir el contenedor." << endl;
 	cout << C.toString() << endl;
 }
-void imprCantDeProdBajosDeExist(SuperContenedorV C);
+/*void imprCantDeProdBajosDeExist(SuperContenedorV C);*/
 
 
 //void desplegProdMayQue(SuperContenedorV& C){
-//	cout << " 11- Desplegar la lista de productos que son m�s costosos que un producto dado." <<endl;
+//	cout << " 11- Desplegar la lista de productos que son más costosos que un producto dado." <<endl;
 //	cout << C.imprimePrecMayoresDe();
 //}
 
@@ -340,13 +348,12 @@ void logicaDeControl(int op, string valor, SuperContenedorV& C) {
 		ingresaArticulo(C);
 	}break;
 	
-//	case 2: {
-//		eliminarId(C);
-//	}break;
+	case 2: {
+		eliminarId(C);
+	}break;
 
 	case 3: {
 		proDeMayVal(C);
-		imprimirContenedor(C);
 	}break;
 	
 	case 4: {
