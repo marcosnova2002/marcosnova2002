@@ -9,9 +9,10 @@ private:
 	string nombre;
 	int precio;
 	int existencias;
+	int ventas;
 public:
 	Articulo();
-	Articulo(string, string, int, int);
+	Articulo(string, string, int, int, int);
 	virtual ~Articulo();
 	
 	void setId(string);
@@ -19,14 +20,15 @@ public:
 	void setPrecio(int);
 	void setExistencias(int);
 	void setPosArt(string);
-	
+	void setVentas(int);
 
 	string getId();
 	string getNombre();
 	int getPrecio();
 	int getExistencias();
 	string getPosArticulo();
-
+	int getVentas();
+	
 	string toString();
 };
 
@@ -37,11 +39,12 @@ Articulo::Articulo() {
 	existencias = 0;
 }
 
-Articulo::Articulo(string iid, string nom, int pr, int exi) {
+Articulo::Articulo(string iid, string nom, int pr, int exi, int ven) {
 	id = iid;
 	nombre = nom;
 	precio = pr;
 	existencias = exi;
+	ventas = ven;
 }
 
 Articulo::~Articulo() {
@@ -53,11 +56,13 @@ void Articulo::setId(string iid) { id = iid; }
 void Articulo::setNombre(string nom) { nombre = nom; }
 void Articulo::setPrecio(int pr) { precio = pr; }
 void Articulo::setExistencias(int exi) { existencias = exi; }
+void Articulo::setVentas(int ven) {ventas == ventas;}
 
 string Articulo::getId() { return id; }
 string Articulo::getNombre() { return nombre; }
 int Articulo::getPrecio() { return precio; }
 int Articulo::getExistencias() {return existencias;}
+int Articulo::getVentas() {return ventas;}
 
 string Articulo::toString() { 
 	stringstream s;
@@ -89,6 +94,7 @@ public:
 	
 	double promedioPrecio();
 	void ordenarAscPorPrecio();
+	void ordenarAscPorId();
 	void ordenarAscPorNombre();
 	void laDeMayorPrecio();
 	void imprimePrecMayoresDe();
@@ -177,6 +183,7 @@ void SuperContenedorV::eliminarArtPorSuId(){
 		}
 	}
 }
+
 void SuperContenedorV::ordenarAscPorPrecio() {
 	Articulo aux;
 	for (int i = 0; i < cantidad; i++) { 
@@ -203,19 +210,6 @@ void SuperContenedorV::ordenarAscPorNombre() {
 	}
 }
 
-void SuperContenedorV::laDeMayorPrecio() {
-	
-	Articulo aux;
-	for (int i = 0; i < cantidad; i++) { 
-		for (int j = i + 1; j < cantidad; j++) { 
-			if (vec[i].getPrecio() < vec[j].getPrecio()) {
-				aux = vec[i];
-				vec[i] = vec[j];
-				vec[j] = aux;
-			}
-		}
-	}
-}
 	
 void SuperContenedorV::productoDeMayorValor(){
 	
@@ -233,26 +227,26 @@ void SuperContenedorV::productoDeMayorValor(){
 	cout<<vec[pos].getPrecio()<<endl;
 }
 
-//void SuperContenedorV::eliminarArtPorSuId()		{    
-//	string cod;
-//	cout<< endl;
-//	cout<<" Ingrese el id del articulo que desea eliminar"<<endl;
-//	cin>>cod;
-//	for (int i = 0; i < cantidad; i++)
-//		if(vec[i].getId() == cod) {
-//		vec[i].setId("");
-//		vec[i].setNombre("");
-//		vec[i].setPrecio(0);
-//		vec[i].setExistencias(0);
-//	}
-//		cantidad = -1;
-//}
-//	
+void Contenedor::ordenarAscPorId() {
+	Articulo aux;
+	for (int i = 0; i < cantidad; i++) { // for externo...(lerdo)
+		for (int j = i + 1; j < cantidad; j++) { // for interno es muy rápido...
+			if (vec[i].getId() > vec[j].getId()) { // Intercambio.... se realiza solo con tres lineas..
+				aux = vec[i];
+				vec[i] = vec[j];
+				vec[j] = aux;
+			}
+		}
+	}
+}
+
+
 
 
 int menu();
 void ingresaArticulo(SuperContenedorV&);
 void eliminarId(SuperContenedorV&);
+void ordenarAcPorId(SuperContenedorV&);
 void proDeMayVal(SuperContenedorV&);
 void proDeMayExist(SuperContenedorV&);
 void ordernarId(SuperContenedorV&);
@@ -329,7 +323,10 @@ void proDeMayVal(SuperContenedorV& C) {
 //	cout << "-4- Desplegar el producto de mayor existencias" <<endl;
 //		
 //}
-	
+
+void ordenarAcPorId(SuperContenedorV& C){
+	C.ordenarAscPorId();
+}
 void imprimirContenedor(SuperContenedorV& C) {
 	cout << " 6- Imprimir el contenedor." << endl;
 	cout << C.toString() << endl;
